@@ -14,9 +14,9 @@ def main():
     """
     st.markdown(html_temp, unsafe_allow_html=True)
 
-    SepalLength = st.slider("SepalLength", min_value=4.3, max_value=7.9, step=0.1)
-    SepalWidth = st.slider("SepalWidth", min_value=2.0, max_value=4.4, step=0.1)
-    PetalLength = st.slider("PetalLength", min_value=1.0, max_value=6.9, step=0.1)
+    SepalLength = st.slider("SepalLength", min_value=4.0, max_value=8.0, step=0.1)
+    SepalWidth = st.slider("SepalWidth", min_value=2.0, max_value=4.5, step=0.1)
+    PetalLength = st.slider("PetalLength", min_value=1.0, max_value=7.0, step=0.1)
     PetalWidth = st.slider("PetalWidth", min_value=0.1, max_value=2.5, step=0.1)
 
     safe_html = """  
