@@ -16,10 +16,8 @@ def class_prediction(SepalLength, SepalWidth, PetalLength, PetalWidth):
     return prediction[0]
 
 
-def reg_prediction(SepalLength, SepalWidth, PetalLength, PetalWidth):
-    input = np.array([[SepalLength, SepalWidth, PetalLength, PetalWidth]]).astype(
-        np.float64
-    )
+def reg_prediction(hours, prev_score):
+    input = np.array([[hours, prev_score]]).astype(np.float64)
     prediction = reg_model.predict(input)
     return prediction[0]
 
@@ -35,6 +33,6 @@ async def read_root(request: Request):
 @app.post("/regression")
 async def read_root(request: Request):
     data = await request.json()
-    SepalLength, SepalWidth, PetalLength, PetalWidth = data.values()
-    pred = reg_prediction(SepalLength, SepalWidth, PetalLength, PetalWidth)
+    hours, prev_score = data.values()
+    pred = reg_prediction(hours, prev_score)
     return str(pred)
