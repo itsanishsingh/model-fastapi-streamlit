@@ -24,8 +24,9 @@ def main():
         <h2 style="color:white;text-align:center;"> Lets see</h2>
         </div>
         """
+
     if st.button("Predict Iris"):
-        url = "http://127.0.0.1:8000/result"
+        url = "http://127.0.0.1:8000/regression"
         data = {"1": SepalLength, "2": SepalWidth, "3": PetalLength, "4": PetalWidth}
         response = requests.post(url, json=data)
         output = response.text

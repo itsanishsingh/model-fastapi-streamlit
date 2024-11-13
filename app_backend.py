@@ -2,22 +2,39 @@ from fastapi import FastAPI, Request
 import numpy as np
 import joblib
 
-model = joblib.load("model.joblib")
+class_model = joblib.load("classification_model.joblib")
+reg_model = joblib.load("regression_model.joblib")
 
 app = FastAPI()
 
 
-def prediction(SepalLength, SepalWidth, PetalLength, PetalWidth):
+def class_prediction(SepalLength, SepalWidth, PetalLength, PetalWidth):
     input = np.array([[SepalLength, SepalWidth, PetalLength, PetalWidth]]).astype(
         np.float64
     )
-    prediction = model.predict(input)
+    prediction = class_model.predict(input)
     return prediction[0]
 
 
-@app.post("/result")
+def reg_prediction(SepalLength, SepalWidth, PetalLength, PetalWidth):
+    input = np.array([[SepalLength, SepalWidth, PetalLength, PetalWidth]]).astype(
+        np.float64
+    )
+    prediction = reg_model.predict(input)
+    return prediction[0]
+
+
+@app.post("/classification")
 async def read_root(request: Request):
     data = await request.json()
     SepalLength, SepalWidth, PetalLength, PetalWidth = data.values()
-    pred = prediction(SepalLength, SepalWidth, PetalLength, PetalWidth)
+    pred = class_prediction(SepalLength, SepalWidth, PetalLength, PetalWidth)
+    return str(pred)
+
+
+@app.post("/regression")
+async def read_root(request: Request):
+    data = await request.json()
+    SepalLength, SepalWidth, PetalLength, PetalWidth = data.values()
+    pred = reg_prediction(SepalLength, SepalWidth, PetalLength, PetalWidth)
     return str(pred)
